@@ -1,0 +1,59 @@
+#include <map>
+#include <set>
+#include <list>
+#include <cmath>
+#include <ctime>
+#include <deque>
+#include <queue>
+#include <stack>
+#include <string>
+#include <bitset>
+#include <cstdio>
+#include <limits>
+#include <vector>
+#include <climits>
+#include <cstring>
+#include <cstdlib>
+#include <fstream>
+#include <numeric>
+#include <sstream>
+#include <iostream>
+#include <algorithm>
+#include <unordered_map>
+
+using namespace std;
+
+long long make_change(const vector<int>& coins, int money, long long ** cache, int index) {
+    if (cache[money][index]) return cache[money][index];
+    if (money == 0) return 1;
+    long long ways = 0;
+    int current = 0;
+    
+    for (int m = index; m >= 0; m--)
+    {
+        current = money - coins[m];
+        if (current >= 0){
+            cache[current][m] = make_change(coins, current, cache, m);
+            ways += cache[current][m];     
+        }
+    }
+    return ways;
+}
+
+int main(){
+    int n;
+    int m;
+    cin >> n >> m;
+    vector<int> coins(m);
+    for(int coins_i = 0;coins_i < m;coins_i++){
+       cin >> coins[coins_i];
+    }
+    long long ** cache = new long long* [n + 1];
+    for (int i = 0; i <= n ; i++)
+    {
+        cache[i] = new long long[m];
+    }
+    
+    cout << make_change(coins, n, cache, coins.size() - 1) << endl;
+    return 0;
+}
