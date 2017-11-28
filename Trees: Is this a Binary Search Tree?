@@ -1,0 +1,44 @@
+""" Node is defined as
+class node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+"""
+
+""" Node is defined as
+class node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+"""
+
+    
+def checkBST(root, leftMin = None, leftMax = None, rightMin = None, rightMax = None):
+    left = True
+    debug = False
+    right = True
+    if leftMin == None:
+        leftMin = 0
+        leftMax = root.data - 1
+        rightMin = root.data + 1
+        rightMax = 100000
+       
+    if root.left != None:
+        if root.left.data >= leftMin and root.left.data <= leftMax:
+            left = checkBST(root.left, leftMin, root.left.data - 1, root.left.data + 1, root.data - 1)
+        else:
+            return False
+    
+    if root.right != None:
+        if root.right.data >= rightMin and root.right.data <= rightMax:
+            right = checkBST(root.right, root.data + 1, root.right.data - 1, root.right.data + 1, rightMax)
+        else:
+            return False
+    
+
+    return (left and right)
+    
+    
+    
