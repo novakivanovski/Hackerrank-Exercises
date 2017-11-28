@@ -1,0 +1,53 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    static StringBuffer super_reduced_string(String s){
+        boolean exit = false;
+        StringBuffer reducedString = new StringBuffer(s);
+        int sLength = reducedString.length();
+        while (sLength > 1  && !exit )
+        {
+            boolean duplicate = false;
+            int i = 0;
+            while (!duplicate && !exit)
+            {
+                if (reducedString.charAt(i) == reducedString.charAt(i+1))
+                {
+                    reducedString.delete(i, i+2);
+                    sLength = reducedString.length();
+                    duplicate = true;    
+                }
+                else
+                {
+                    i = i + 1;
+                    if (i == sLength - 1)
+                    {
+                        exit = true;
+                    }
+                }
+                
+                
+            }
+            
+            
+        }
+        if (reducedString.length() == 0)
+        {
+            reducedString = new StringBuffer("Empty String");
+        }
+        return reducedString;
+        
+    }
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String s = in.next();
+        StringBuffer result = super_reduced_string(s);
+        System.out.println(result);
+    }
+}
