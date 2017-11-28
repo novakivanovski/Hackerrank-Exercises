@@ -1,0 +1,94 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+class IceCream {
+    
+    public: 
+        int cost;
+        int id;
+
+        IceCream(int c, int index) {
+            cost = c;
+            id = index;     
+       }
+    
+    bool operator < (const IceCream& ref) const
+    {
+        return (cost < ref.cost);
+    }
+};
+    
+int binarySearch(int first, int last, vector<IceCream> arr, int value) {
+    int mid = (first + last)/2;
+    int index = -1;
+    
+    if (first > last)
+    {
+        return -1;
+    }
+    
+ 
+    else if (value == arr[mid].cost)
+    {
+        return mid;
+    }
+    
+    else
+    {
+        if (value < arr[mid].cost)
+        {
+            index = binarySearch(first, mid-1, arr, value);
+        }
+        else
+        {
+            index = binarySearch(mid+1, last, arr, value);
+        }
+    }
+   return index; 
+}
+
+int main() {
+    int t;
+    int n, m;
+    cin >> t;
+    for(int test = 0; test < t ; test++) {       
+        cin >> m >> n;
+        vector<IceCream> arr;
+        arr.reserve(n); 
+
+        for (int i = 0; i < n; i++) {
+            int cost;
+            cin >> cost;
+            arr.push_back(IceCream(cost, i + 1));
+        }
+        sort(arr.begin(), arr.end());
+        int i = 0;
+        int j = -1;
+        int search = m - arr[i].cost;
+        
+        while (search >= arr[i].cost && j == -1)
+        {
+            j = binarySearch(i+1, arr.size()-1, arr, search);
+            if (j == -1) i++;
+            search = m - arr[i].cost;
+        }
+        
+        if (j >= 0 && j < arr.size() && i >= 0 && i < arr.size())
+            {
+            if (arr[i].id < arr[j].id) cout << arr[i].id << " " << arr[j].id << endl;
+            else cout << arr[j].id << " " << arr[i].id << endl;
+            }
+            else
+            {
+                cout << "Not found" << endl;
+                cout << i  << " " << j << endl;
+            }
+        
+       
+        }
+}
+
