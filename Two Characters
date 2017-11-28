@@ -1,0 +1,67 @@
+#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+int maxLen(string s){
+    string distinct = "";
+    for (int i = 0; i < s.length() ; i++)
+    {
+        bool unique = true;
+        for (int j = 0; j < distinct.size(); j++)
+        {
+            if (distinct[j] == s[i] )
+            {
+                unique = false;
+            }
+        }
+        
+        if (unique) distinct +=s[i];
+    }
+    
+    vector<string> permutations;
+    
+    for (int i = 0; i < distinct.length() -1 ; i++)
+    {
+        for (int j = i+1; j < distinct.length() ; j++)
+        {
+            string sub = distinct.substr(i, 1) + distinct.substr(j, 1);
+            permutations.push_back(sub);
+        }
+        
+    }
+    
+    int max = 0;
+    vector<string> sub;
+    for (int i = 0; i < permutations.size() ; i++)
+    {
+        sub.push_back("");
+        string prev = "";
+        bool alternating = true;
+        for (int j = 0; j < s.length() ; j++ )
+        {
+            if (s[j] == permutations[i][0] || s[j] == permutations[i][1])
+            {
+                string current = s.substr(j,1);
+                sub[i] += current;
+                if (current == prev) alternating = false;
+                prev = current;
+            }           
+        }
+        
+        if (alternating && sub[i].length() > max) max = sub[i].length();    
+    } 
+    return max;
+}
+
+int main() {
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+    int result = maxLen(s);
+    cout << result << endl;
+    return 0;
+}
