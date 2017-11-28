@@ -1,0 +1,21 @@
+import re
+regex = r'\S+@\S+\.\w+'   
+emails = []
+output = ''
+n = int(input())
+
+for i in range(n):
+    line = input()
+    found = re.findall(regex, line)
+    if found:
+        for item in found:
+            emails.append(item)
+            
+                     
+emails = list(set(emails))           
+emails.sort()
+for email in emails:
+    output += email + ';'
+
+if output:
+    print (output[:-1])
