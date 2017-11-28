@@ -1,0 +1,22 @@
+from bisect import bisect_left
+import sys
+
+
+n = int(input().strip()) 
+a = []
+a_i = 0
+size = 0
+
+for a_i in range(n):
+    a_t = int(input().strip())
+    k = bisect_left(a, a_t)
+    a.insert(k, a_t)
+    size +=1
+    half = int(size/2)
+    if size % 2:
+        median = float(a[half])
+    else:
+        median = (a[half-1] + a[half])/2
+        
+    format(median, '.1f')
+    print (median)
