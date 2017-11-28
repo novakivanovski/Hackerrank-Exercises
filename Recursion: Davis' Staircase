@@ -1,0 +1,16 @@
+def step(n):
+    if (cache[n] != None):
+        return cache[n]
+    if n == 0:
+        return 1
+    if n < 0:
+        return 0
+    cache[n] = step(n-1) + step(n-2) +step(n-3)
+    return cache[n]
+
+s = int(input().strip())
+for a0 in range(s):
+    n = int(input().strip())
+    cache = [None] * (n + 1)
+    total = step(n)
+    print(total)
