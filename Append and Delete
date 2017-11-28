@@ -1,0 +1,35 @@
+#!/bin/python3
+
+import sys
+
+
+inputString = input().strip()
+outputString = input().strip()
+k = int(input().strip())
+
+inputLength = len(inputString)
+outputLength = len(outputString)
+notSame = 0
+i = 0
+
+while (i <= inputLength - 1 and i <= outputLength - 1 and inputString[i] == outputString[i]):
+    notSame = notSame + 1
+    i = i + 1
+    
+deletions = inputLength - notSame
+operations = deletions
+
+while (len(inputString) > 0 and deletions > 0):
+    inputString = inputString[:-1]
+    deletions = deletions - 1
+
+for i in range (notSame, outputLength):
+    inputString = inputString + outputString[i]
+    operations = operations + 1
+    
+#print (operations)
+
+if (k >= operations and (operations % 2 == k % 2 or k >= inputLength + outputLength) ):
+    print ("Yes")
+else:
+    print ("No")
