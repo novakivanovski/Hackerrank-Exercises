@@ -1,0 +1,41 @@
+def is_matched(s):
+    stack = []
+    if (len(s) % 2 == 1 or len(s) < 2):
+        return False
+    for bracket in s:
+        #print (stack)
+        if not (bracket == "{" or bracket == "[" or bracket == "(" or bracket == "}" or bracket == "]" or bracket == ")"):
+            return False
+        if (bracket == "{" or bracket == "[" or bracket == "(" ):
+            stack.append(bracket)
+        else:
+            if (not stack):
+                return False
+            top = stack.pop()
+            if (bracket == "}" and top != "{"):
+                return False
+            elif (bracket == "]" and top != "["):
+                return False
+            elif ( bracket == ")" and top != "(" ):
+                    return False
+            else:
+                pass
+
+    if (not stack):
+        return True
+    else:
+        return False
+    
+
+t = int(input().strip())
+
+for a0 in range(t):
+    expression = input().strip()
+    if is_matched(expression) == True:
+        text = "YES"
+    else:
+        text = "NO"
+    
+
+    print(text)
+
