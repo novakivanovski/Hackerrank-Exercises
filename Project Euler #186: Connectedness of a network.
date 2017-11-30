@@ -1,0 +1,63 @@
+from math import ceil
+class Node:
+    def __init__(self, number):
+        self.number = number
+        self.size = 1
+        self.parent = self
+     
+def find(node):
+    if node.parent == node:
+        return node
+    else:
+        node.parent = find(node.parent)
+        return node.parent
+   
+def merge(x, y):
+    xRoot = find(x)
+    yRoot = find(y)
+    
+    if xRoot == yRoot:
+        return
+    
+    if xRoot.size < yRoot.size:
+        xRoot.parent = yRoot
+        yRoot.size += xRoot.size
+    else:
+        yRoot.parent = xRoot
+        xRoot.size += yRoot.size
+        
+
+def generate_number(k, buffer):
+    if k <= 55:
+        num = (100003 - 200003*k + 300007*k*k*k) % 1000000
+    else:
+        size = len(buffer)
+        num = (buffer[size - 55] + buffer[size - 24]) % 1000000
+        if size > 1000:
+            del buffer[0:size-55]
+        
+    buffer.append(num)
+    return num
+        
+def find_callers(pmNumber, friendsNeeded):
+    calls = 0
+    buffer = []
+    n = 0
+    while (find(numbers[pmNumber]).size < friendsNeeded):
+        n = n + 1
+        caller = generate_number(2 * n - 1, buffer)
+        called = generate_number(2 * n, buffer)
+        if caller != called:
+            calls = calls + 1
+            merge(numbers[caller], numbers[called])
+    return calls
+
+data = list(map(int, input().split(" ")))
+pmNumber = data[0]
+p = data[1]/100
+total = 1000000
+numbers = [Node(x) for x in range(total)]
+
+friendsNeeded = ceil(p * total)
+calls = find_callers(pmNumber, friendsNeeded)
+print (calls)
