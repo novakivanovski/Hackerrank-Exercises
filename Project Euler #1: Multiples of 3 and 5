@@ -1,0 +1,29 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+    
+    public static long sum(long n)
+    {
+        long nThree = (n-1) / 3;
+        long nFive = (n-1) / 5;
+        long nFifteen = (n-1) / 15; 
+        long sumThree = 3 * nThree * (nThree + 1) / 2;
+        long sumFive = 5 * nFive * (nFive + 1) / 2;
+        long sumFifteen = 15 * nFifteen * (nFifteen + 1) / 2;
+        return (sumThree + sumFive - sumFifteen);
+    }
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int t = in.nextInt();
+        for(int a0 = 0; a0 < t; a0++){
+            long n = in.nextLong();
+            long result = sum(n);
+            System.out.println(result);
+        }
+    }
+}
