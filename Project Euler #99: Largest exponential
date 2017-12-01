@@ -1,0 +1,40 @@
+#include <cmath>
+#include <cstdio>
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <math.h>
+#include <tuple>
+using namespace std;
+
+
+long double convert_base(unsigned long b, unsigned long e)
+{
+    return (e * log(b));
+}
+
+bool cmp(const tuple<unsigned long, unsigned long, long double> &a,const tuple<unsigned long, unsigned long, long double> &b)
+{
+	return get<2>(a) < get<2>(b);
+}
+
+int main() {
+    int n;
+    unsigned long b;
+    unsigned long e;
+    int k;
+    cin >> n;
+    vector<tuple< unsigned long, unsigned long, long double>> data;
+    for (int i = 0; i < n ; i++)
+    {
+        cin >> b;
+        cin >> e;
+        data.push_back(tuple<unsigned long, unsigned long, long double>(b, e, convert_base(b,e)));
+    }
+    cin >> k;
+    sort(data.begin(), data.end(), cmp);
+    cout << get<0>(data[k-1]) << " "<< get<1>(data[k-1]) << endl;
+
+    
+    return 0;
+}
