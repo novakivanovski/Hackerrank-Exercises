@@ -1,0 +1,40 @@
+class TreeNode:
+    def __init__(self, id):
+        self.id = id
+        self.parent = None
+        self.children = []
+
+def connect(childNode, parentNode):
+    parentNode.children.append(childNode)
+    childNode.parent = parentNode
+    
+def sever(node):
+    if node.parent:
+        node.parent.children.remove(node)
+        node.parent = None
+    
+
+def debug():
+    for node in nodes:
+        print ("node id: ", node.id)
+        print ("node parents: ")
+        for parent in node.parents:
+            print (parent.id)
+        print ("node children")
+        for child in node.children:
+            print (child.id)
+        print("-----------")    
+        
+N, M = tuple(map(int, input().split(" ")))
+removed_edges = 0
+nodes = [TreeNode(i+1) for i in range(N)]
+for i in range(M):
+    nodeA, nodeB= tuple(map(int, input().split(" ")))
+    connect(nodes[nodeA - 1], nodes[nodeB -1]) 
+
+for i in range(N):
+    if len(nodes[N-i-1].children) % 2:
+        removed_edges += 1
+        sever(nodes[N-i-1])
+
+print (removed_edges - 1)
