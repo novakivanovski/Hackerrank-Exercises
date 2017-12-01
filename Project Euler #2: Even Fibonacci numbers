@@ -1,0 +1,43 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+#include <limits.h>
+
+
+vector<unsigned long> history;
+
+unsigned long fibonacci()
+{   
+    auto result = history[history.size() - 1] + history[history.size() -2];
+    history.push_back(result);
+    if (history.size() > 1000)
+    {
+        history.erase(history.begin(), history.end() -2);
+    }
+    return result;
+}
+
+
+int main() {
+    unsigned int t;
+    unsigned long n;
+    cin >> t;
+    for (int i = 0; i < t; i++)
+    {
+        history.erase(history.begin(), history.end());
+        history.push_back(1);
+        history.push_back(2);
+        cin >> n;
+        unsigned long sum = 2;
+        
+        while (fibonacci() <= n)
+        {
+            if (history.back() % 2 == 0) sum += history.back();
+        }
+        cout << sum << endl;    
+    }  
+    return 0;
+}
